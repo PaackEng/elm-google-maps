@@ -1,4 +1,4 @@
-module Marker exposing
+module GoogleMaps.Marker exposing
     ( Marker
     , init
     , onClick

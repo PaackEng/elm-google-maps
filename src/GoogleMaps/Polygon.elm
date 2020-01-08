@@ -1,4 +1,4 @@
-module Polygon exposing
+module GoogleMaps.Polygon exposing
     ( Polygon
     , init
     , onClick

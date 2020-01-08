@@ -1,4 +1,4 @@
-module Map exposing
+module GoogleMaps.Map exposing
     ( Map
     , MapType
     , hybrid
@@ -24,10 +24,10 @@ module Map exposing
     , withZoomActions
     )
 
+import GoogleMaps.Marker exposing (Marker)
+import GoogleMaps.Polygon exposing (Polygon)
 import Html exposing (Html)
 import Internals.Map as IMap
-import Marker exposing (Marker)
-import Polygon exposing (Polygon)
 
 
 type MapType

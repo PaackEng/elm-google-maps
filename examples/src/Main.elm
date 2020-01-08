@@ -1,12 +1,12 @@
 module Main exposing (main)
 
 import Browser
+import GoogleMaps.Map as Map
+import GoogleMaps.Marker as Marker exposing (Marker)
+import GoogleMaps.Polygon as Polygon exposing (Polygon)
 import Html exposing (Html, button, div, h1, img, p, text)
 import Html.Attributes exposing (src, style)
 import Html.Events exposing (onClick)
-import Map
-import Marker exposing (Marker)
-import Polygon exposing (Polygon)
 
 
 

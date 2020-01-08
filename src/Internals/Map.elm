@@ -20,12 +20,12 @@ module Internals.Map exposing
     , withZoomActions
     )
 
+import GoogleMaps.Marker as Marker exposing (Marker)
+import GoogleMaps.Polygon as Polygon exposing (Polygon)
 import Html exposing (Attribute, Html, node)
 import Html.Attributes exposing (attribute, style)
 import Internals.Helpers exposing (addIf, maybeAdd)
 import Internals.Map.Events as Events exposing (Events)
-import Marker exposing (Marker)
-import Polygon exposing (Polygon)
 
 
 type alias Map msg =
