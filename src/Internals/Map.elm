@@ -33,7 +33,6 @@ type alias Map msg =
     , markers : List (Marker msg)
     , polygons : List (Polygon msg)
     , mapType : MapType
-    , height : Height
     , center : Maybe ( Float, Float )
     , minZoom : Int
     , maxZoom : Int
@@ -64,17 +63,12 @@ type alias ApiKey =
     String
 
 
-type alias Height =
-    Float
-
-
-init : ApiKey -> Height -> Map msg
-init apiKey height =
+init : ApiKey -> Map msg
+init apiKey =
     { apiKey = apiKey
     , markers = []
     , polygons = []
     , mapType = Roadmap
-    , height = height
     , center = Nothing
     , minZoom = 0
     , maxZoom = 20
@@ -231,7 +225,7 @@ baseAttributes map =
     , intToAttribute "zoom" map.zoom
     , intToAttribute "min-zoom" map.minZoom
     , intToAttribute "max-zoom" map.maxZoom
-    , style "height" <| String.fromFloat map.height ++ "px"
+    , style "height" "100%"
     , mapTypeToAttribute map.mapType
     ]
 

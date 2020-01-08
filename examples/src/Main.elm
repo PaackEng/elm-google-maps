@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (Html, button, div, h1, img, p, text)
-import Html.Attributes exposing (src)
+import Html.Attributes exposing (src, style)
 import Html.Events exposing (onClick)
 import Map
 import Marker exposing (Marker)
@@ -61,7 +61,7 @@ update msg model =
 
 googleMapView : Model -> Html Msg
 googleMapView { mapType, googleMapKey } =
-    Map.init googleMapKey 400
+    Map.init googleMapKey
         |> Map.withMapType mapType
         |> Map.withCustomStyle mapStyle
         |> Map.withFitToMarkers True
@@ -112,7 +112,7 @@ view model =
             else
                 "Loading map"
     in
-    div []
+    div [ style "height" "400px" ]
         [ googleMapView model
         , div []
             [ button [ onClick <| ChangeMapType Map.satellite ] [ text "Satellite" ]

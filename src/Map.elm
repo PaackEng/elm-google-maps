@@ -38,10 +38,6 @@ type alias ApiKey =
     String
 
 
-type alias Height =
-    Float
-
-
 type alias Latitude =
     Float
 
@@ -54,9 +50,9 @@ type Map msg
     = Map (IMap.Map msg)
 
 
-init : ApiKey -> Height -> Map msg
-init apiKey height =
-    Map (IMap.init apiKey height)
+init : ApiKey -> Map msg
+init apiKey =
+    Map (IMap.init apiKey)
 
 
 withCenter : Latitude -> Longitude -> Map msg -> Map msg
