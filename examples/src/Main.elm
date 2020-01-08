@@ -62,13 +62,13 @@ update msg model =
 googleMapView : Model -> Html Msg
 googleMapView { mapType, googleMapKey } =
     Map.init googleMapKey 400
-        --|> Map.withMapType mapType
-        --|> Map.withCustomStyle mapStyle
-        --|> Map.withFitToMarkers True
-        --|> Map.onMapReady ShowReadyText
-        --|> Map.withZoom 13
-        --|> Map.withMarkers markers
-        --|> Map.withPolygons polygons
+        |> Map.withMapType mapType
+        |> Map.withCustomStyle mapStyle
+        |> Map.withFitToMarkers True
+        |> Map.onMapReady ShowReadyText
+        |> Map.withZoom 13
+        |> Map.withMarkers markers
+        |> Map.withPolygons polygons
         |> Map.toHtml
 
 
