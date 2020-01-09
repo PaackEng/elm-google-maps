@@ -7,7 +7,7 @@ module GoogleMaps.Map exposing
     , onMapClick, onMapReady
     )
 
-{-| This module allows you to create markers to be used along with GoogleMaps.Map
+{-| This module allows you to create maps using Google maps webcomponent behind the scene
 
 > Note that the map has 100% height, so you would resize the map based on the parent view
 
@@ -103,7 +103,7 @@ type Map msg
     = Map (IMap.Map msg)
 
 
-{-| It requires the api key that is a String
+{-| It requires the api key whose type is String
 -}
 init : ApiKey -> Map msg
 init apiKey =
@@ -139,6 +139,9 @@ withMaxZoom zoom (Map map) =
 
 
 {-| Sets the mapType.
+
+The default type is roadmap.
+
 Possible options:
 
 satellite, roadmap, hybrid, terrain
@@ -193,7 +196,7 @@ withCustomStyle mapStyle (Map map) =
     Map (IMap.withCustomStyle mapStyle map)
 
 
-{-| If contains 1 marker, it sets the map center to the marker location, otherwise it changes the bounds in order to fit all the markers in the screen
+{-| If there is 1 marker only then the map will be centered to the marker position, otherwise the map bounds change in order to fit all the markers.
 -}
 withFitToMarkers : Bool -> Map msg -> Map msg
 withFitToMarkers shouldFit (Map map) =
@@ -208,7 +211,6 @@ withFitToMarkers shouldFit (Map map) =
     myMarker : Marker.Marker Msg
     myMarker =
         Marker.init -3.7344654 -38.5057405
-            |> Marker.onClick MyClickMsg
 
     mapView : String -> Html Msg
     mapView apiKey =

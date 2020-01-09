@@ -85,7 +85,7 @@ init points =
 
 {-| There is no default color
 
-this function accepts the same formats as the css color values
+this function accepts the same formats as the CSS color values
 
 E.g `"rbg(255,255,0)", "orange" or "#ff00ff"`
 
@@ -111,7 +111,7 @@ withStrokeWeight strokeWeight (Polygon polygon) =
 
 {-| The default is black
 
-this function accepts the same formats as the css color values
+this function accepts the same formats as the CSS color values
 
 E.g `"rbg(255,255,0)", "orange" or "#ff00ff"`
 

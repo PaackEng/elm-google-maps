@@ -34,7 +34,7 @@ module GoogleMaps.Marker exposing
 @docs onClick
 
 
-# Don't touch this :o
+# Don't use this :o
 
 @docs toHtml
 
@@ -66,7 +66,7 @@ init latitude longitude =
     Marker <| IMarker.init latitude longitude
 
 
-{-| Sets a custom image to the marker
+{-| Sets a click event handler
 -}
 onClick : msg -> Marker msg -> Marker msg
 onClick msg (Marker marker) =
