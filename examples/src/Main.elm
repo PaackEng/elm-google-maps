@@ -39,7 +39,7 @@ init key =
 type Msg
     = ChangeMapType Map.MapType
     | ShowReadyText
-    | OnMarkerClicked
+    | OnMapObjectClicked
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -51,7 +51,7 @@ update msg model =
         ShowReadyText ->
             ( { model | showReadyText = True }, Cmd.none )
 
-        OnMarkerClicked ->
+        OnMapObjectClicked ->
             ( { model | clickCount = model.clickCount + 1 }, Cmd.none )
 
 
@@ -82,9 +82,9 @@ polygons =
                 , ( -3.7474947, -38.5153675 )
                 ]
                 |> Polygon.withStrokeColor "red"
-                |> Polygon.withFillColor "orange"
+                |> Polygon.withFillColor "rgb(0, 255,0)"
                 |> Polygon.withFillOpacity 0.25
-                |> Polygon.onClick OnMarkerClicked
+                |> Polygon.onClick OnMapObjectClicked
                 |> Polygon.withClosedMode
     in
     [ polygon ]
@@ -95,7 +95,7 @@ markers =
     let
         marker =
             Marker.init -3.7715105 -38.5724269
-                |> Marker.onClick OnMarkerClicked
+                |> Marker.onClick OnMapObjectClicked
                 |> Marker.withDraggableMode
     in
     [ marker ]

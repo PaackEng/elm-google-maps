@@ -90,7 +90,7 @@ toHtml : Polygon msg -> Html msg
 toHtml polygon =
     let
         points =
-            List.map buildMarkerHtml polygon.points
+            List.map buildPointHtml polygon.points
 
         attrs =
             [ attribute "fill-color" polygon.fillColor
@@ -114,8 +114,8 @@ toHtml polygon =
         points
 
 
-buildMarkerHtml : ( Latitude, Longitude ) -> Html msg
-buildMarkerHtml ( latitude, longitude ) =
+buildPointHtml : ( Latitude, Longitude ) -> Html msg
+buildPointHtml ( latitude, longitude ) =
     node "google-map-point"
         [ attribute "latitude" (String.fromFloat latitude)
         , attribute "longitude" (String.fromFloat longitude)

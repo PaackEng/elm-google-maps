@@ -1,9 +1,11 @@
 ### Example
 
+> Disclaimer: This is a experimental package, but you are more than welcome to open issues and pull requests in order to request new features.
+
 ```elm
 googleMapView : String -> Html Msg
 googleMapView googleMapKey =
-    Map.init googleMapKey 400
+    Map.init googleMapKey
         |> Map.toHtml
 ```
 
