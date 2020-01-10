@@ -1,6 +1,7 @@
-### Example
-
 > Disclaimer: This is a experimental package, but you are more than welcome to open issues and pull requests in order to request new features.
+
+
+### Example
 
 ```elm
 googleMapView : String -> Html Msg
@@ -33,9 +34,6 @@ Add those lines in `index.js`
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
 import '@google-web-components/google-map';
 ```
-
-
-
 
 ### How to run the example
 
