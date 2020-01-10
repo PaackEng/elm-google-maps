@@ -196,7 +196,7 @@ withCustomStyle mapStyle (Map map) =
     Map (IMap.withCustomStyle mapStyle map)
 
 
-{-| If there is 1 marker only then the map will be centered to the marker position, otherwise the map bounds change in order to fit all the markers.
+{-| This option is diesabled by default. If the option is enabled the map bounds change in order to fit all the markers. If there is 1 marker only then the map will be centered to the marker position.
 -}
 withFitToMarkers : Bool -> Map msg -> Map msg
 withFitToMarkers shouldFit (Map map) =
