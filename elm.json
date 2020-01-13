@@ -1,20 +1,20 @@
 {
-  "type": "package",
-  "name": "PaackEng/elm-google-maps",
-  "summary": "Type safe google maps implementation",
-  "license": "BSD-3-Clause",
-  "version": "1.0.0",
-  "exposed-modules": [
-    "GoogleMaps.Map",
-    "GoogleMaps.Marker",
-    "GoogleMaps.Polygon"
-  ],
-  "elm-version": "0.19.0 <= v < 0.20.0",
-  "dependencies": {
-    "elm/core": "1.0.0 <= v < 2.0.0",
-    "elm/html": "1.0.0 <= v < 2.0.0",
-    "elm/json": "1.1.3 <= v < 2.0.0",
-    "elm/virtual-dom": "1.0.0 <= v < 2.0.0"
-  },
-  "test-dependencies": {}
+    "type": "package",
+    "name": "PaackEng/elm-google-maps",
+    "summary": "Type safe google maps implementation",
+    "license": "BSD-3-Clause",
+    "version": "1.0.0",
+    "exposed-modules": [
+        "GoogleMaps.Map",
+        "GoogleMaps.Marker",
+        "GoogleMaps.Polygon"
+    ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
+    "dependencies": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.1.3 <= v < 2.0.0",
+        "elm/virtual-dom": "1.0.0 <= v < 2.0.0"
+    },
+    "test-dependencies": {}
 }
