@@ -30,7 +30,7 @@ Add those lines in `index.js`
 
 ```js
 import "@webcomponents/webcomponentsjs/custom-elements-es5-adapter";
-import "@google-web-components/google-map";
+import '@google-web-components/google-map';
 ```
 
 ### How to run the example
