@@ -29,7 +29,7 @@ You have to import both items (the order matters)
 Add those lines in `index.js`
 
 ```js
-import "@webcomponents/webcomponentsjs/custom-elements-es5-adapter";
+import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
 import '@google-web-components/google-map';
 ```
 
