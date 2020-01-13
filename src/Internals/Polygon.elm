@@ -26,7 +26,11 @@ type alias Longitude =
     Float
 
 
-type alias Polygon msg =
+type Polygon msg
+    = Polygon (Options msg)
+
+
+type alias Options msg =
     { points : List ( Latitude, Longitude )
     , fillColor : String
     , fillOpacity : Float
@@ -40,54 +44,55 @@ type alias Polygon msg =
 
 init : List ( Latitude, Longitude ) -> Polygon msg
 init points =
-    { points = points
-    , fillColor = ""
-    , fillOpacity = 0
-    , strokeColor = "black"
-    , strokeWeight = 3
-    , zIndex = 0
-    , isClosed = False
-    , onClick = Nothing
-    }
+    Polygon
+        { points = points
+        , fillColor = ""
+        , fillOpacity = 0
+        , strokeColor = "black"
+        , strokeWeight = 3
+        , zIndex = 0
+        , isClosed = False
+        , onClick = Nothing
+        }
 
 
 withFillColor : String -> Polygon msg -> Polygon msg
-withFillColor color polygon =
-    { polygon | fillColor = color }
+withFillColor color (Polygon polygon) =
+    Polygon { polygon | fillColor = color }
 
 
 withFillOpacity : Float -> Polygon msg -> Polygon msg
-withFillOpacity opacity polygon =
-    { polygon | fillOpacity = opacity }
+withFillOpacity opacity (Polygon polygon) =
+    Polygon { polygon | fillOpacity = opacity }
 
 
 withStrokeWeight : Int -> Polygon msg -> Polygon msg
-withStrokeWeight strokeWeight polygon =
-    { polygon | strokeWeight = strokeWeight }
+withStrokeWeight strokeWeight (Polygon polygon) =
+    Polygon { polygon | strokeWeight = strokeWeight }
 
 
 withStrokeColor : String -> Polygon msg -> Polygon msg
-withStrokeColor strokeColor polygon =
-    { polygon | strokeColor = strokeColor }
+withStrokeColor strokeColor (Polygon polygon) =
+    Polygon { polygon | strokeColor = strokeColor }
 
 
 withZIndex : Int -> Polygon msg -> Polygon msg
-withZIndex zIndex polygon =
-    { polygon | zIndex = zIndex }
+withZIndex zIndex (Polygon polygon) =
+    Polygon { polygon | zIndex = zIndex }
 
 
 onClick : msg -> Polygon msg -> Polygon msg
-onClick msg polygon =
-    { polygon | onClick = Just msg }
+onClick msg (Polygon polygon) =
+    Polygon { polygon | onClick = Just msg }
 
 
 withClosedMode : Polygon msg -> Polygon msg
-withClosedMode polygon =
-    { polygon | isClosed = True }
+withClosedMode (Polygon polygon) =
+    Polygon { polygon | isClosed = True }
 
 
 toHtml : Polygon msg -> Html msg
-toHtml polygon =
+toHtml (Polygon polygon) =
     let
         points =
             List.map buildPointHtml polygon.points

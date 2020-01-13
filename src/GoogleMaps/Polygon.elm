@@ -3,7 +3,6 @@ module GoogleMaps.Polygon exposing
     , init
     , withClosedMode, withFillColor, withFillOpacity, withStrokeColor, withStrokeWeight, withZIndex
     , onClick
-    , toHtml
     )
 
 {-| This module allows you to create polygons to be used along with GoogleMaps.Map
@@ -51,11 +50,6 @@ module GoogleMaps.Polygon exposing
 
 @docs onClick
 
-
-# Don't touch this :o
-
-@docs toHtml
-
 -}
 
 import Html exposing (Html)
@@ -63,8 +57,8 @@ import Internals.Polygon as IPolygon
 
 
 {-| -}
-type Polygon msg
-    = Polygon (IPolygon.Polygon msg)
+type alias Polygon msg =
+    IPolygon.Polygon msg
 
 
 {-| -}
@@ -80,7 +74,7 @@ type alias Longitude =
 {-| -}
 init : List ( Latitude, Latitude ) -> Polygon msg
 init points =
-    Polygon <| IPolygon.init points
+    IPolygon.init points
 
 
 {-| There is no default color
@@ -91,22 +85,22 @@ E.g `"rbg(255,255,0)", "orange" or "#ff00ff"`
 
 -}
 withFillColor : String -> Polygon msg -> Polygon msg
-withFillColor color (Polygon polygon) =
-    Polygon <| IPolygon.withFillColor color polygon
+withFillColor color polygon =
+    IPolygon.withFillColor color polygon
 
 
 {-| The default is 0
 -}
 withFillOpacity : Float -> Polygon msg -> Polygon msg
-withFillOpacity opacity (Polygon polygon) =
-    Polygon <| IPolygon.withFillOpacity opacity polygon
+withFillOpacity opacity polygon =
+    IPolygon.withFillOpacity opacity polygon
 
 
 {-| The default is 3
 -}
 withStrokeWeight : Int -> Polygon msg -> Polygon msg
-withStrokeWeight strokeWeight (Polygon polygon) =
-    Polygon <| IPolygon.withStrokeWeight strokeWeight polygon
+withStrokeWeight strokeWeight polygon =
+    IPolygon.withStrokeWeight strokeWeight polygon
 
 
 {-| The default is black
@@ -117,31 +111,31 @@ E.g `"rbg(255,255,0)", "orange" or "#ff00ff"`
 
 -}
 withStrokeColor : String -> Polygon msg -> Polygon msg
-withStrokeColor strokeColor (Polygon polygon) =
-    Polygon <| IPolygon.withStrokeColor strokeColor polygon
+withStrokeColor strokeColor polygon =
+    IPolygon.withStrokeColor strokeColor polygon
 
 
 {-| -}
 withZIndex : Int -> Polygon msg -> Polygon msg
-withZIndex zIndex (Polygon polygon) =
-    Polygon <| IPolygon.withZIndex zIndex polygon
+withZIndex zIndex polygon =
+    IPolygon.withZIndex zIndex polygon
 
 
-{-| it forces the polygon to be a closed shape
+{-| It forces the polygon to be a closed shape
 -}
 withClosedMode : Polygon msg -> Polygon msg
-withClosedMode (Polygon polygon) =
-    Polygon <| IPolygon.withClosedMode polygon
+withClosedMode polygon =
+    IPolygon.withClosedMode polygon
 
 
 {-| -}
 onClick : msg -> Polygon msg -> Polygon msg
-onClick msg (Polygon polygon) =
-    Polygon <| IPolygon.onClick msg polygon
+onClick msg polygon =
+    IPolygon.onClick msg polygon
 
 
 {-| You should not use this function, GoogleMaps.Map uses it in order to render the polygon.
 -}
 toHtml : Polygon msg -> Html msg
-toHtml (Polygon polygon) =
+toHtml polygon =
     IPolygon.toHtml polygon
