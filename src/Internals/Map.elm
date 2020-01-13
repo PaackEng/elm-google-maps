@@ -20,15 +20,19 @@ module Internals.Map exposing
     , withZoomActions
     )
 
-import GoogleMaps.Marker as Marker exposing (Marker)
-import GoogleMaps.Polygon as Polygon exposing (Polygon)
 import Html exposing (Attribute, Html, node)
 import Html.Attributes exposing (attribute, style)
 import Internals.Helpers exposing (addIf, maybeAdd)
 import Internals.Map.Events as Events exposing (Events)
+import Internals.Marker as Marker exposing (Marker)
+import Internals.Polygon as Polygon exposing (Polygon)
 
 
-type alias Map msg =
+type Map msg
+    = Map (Options msg)
+
+
+type alias Options msg =
     { apiKey : ApiKey
     , markers : List (Marker msg)
     , polygons : List (Polygon msg)
@@ -65,19 +69,20 @@ type alias ApiKey =
 
 init : ApiKey -> Map msg
 init apiKey =
-    { apiKey = apiKey
-    , markers = []
-    , polygons = []
-    , mapType = Roadmap
-    , center = Nothing
-    , minZoom = 0
-    , maxZoom = 20
-    , zoom = 14
-    , mapStyle = Nothing
-    , shouldFitToMarkers = False
-    , controls = initControls
-    , events = Events.init
-    }
+    Map
+        { apiKey = apiKey
+        , markers = []
+        , polygons = []
+        , mapType = Roadmap
+        , center = Nothing
+        , minZoom = 0
+        , maxZoom = 20
+        , zoom = 14
+        , mapStyle = Nothing
+        , shouldFitToMarkers = False
+        , controls = initControls
+        , events = Events.init
+        }
 
 
 initControls : Controls
@@ -90,8 +95,8 @@ initControls =
 
 
 withCenter : Float -> Float -> Map msg -> Map msg
-withCenter latitude longitude map =
-    { map | center = Just ( latitude, longitude ) }
+withCenter latitude longitude (Map map) =
+    Map { map | center = Just ( latitude, longitude ) }
 
 
 
@@ -99,43 +104,43 @@ withCenter latitude longitude map =
 
 
 withCustomStyle : String -> Map msg -> Map msg
-withCustomStyle mapStyle map =
-    { map | mapStyle = Just mapStyle }
+withCustomStyle mapStyle (Map map) =
+    Map { map | mapStyle = Just mapStyle }
 
 
 withMapType : MapType -> Map msg -> Map msg
-withMapType mapType map =
-    { map | mapType = mapType }
+withMapType mapType (Map map) =
+    Map { map | mapType = mapType }
 
 
 withZoom : Int -> Map msg -> Map msg
-withZoom zoom map =
-    { map | zoom = zoom }
+withZoom zoom (Map map) =
+    Map { map | zoom = zoom }
 
 
 withMinZoom : Int -> Map msg -> Map msg
-withMinZoom minZoom map =
-    { map | minZoom = minZoom }
+withMinZoom minZoom (Map map) =
+    Map { map | minZoom = minZoom }
 
 
 withMaxZoom : Int -> Map msg -> Map msg
-withMaxZoom maxZoom map =
-    { map | maxZoom = maxZoom }
+withMaxZoom maxZoom (Map map) =
+    Map { map | maxZoom = maxZoom }
 
 
 withFitToMarkers : Bool -> Map msg -> Map msg
-withFitToMarkers shouldFitToMarkers map =
-    { map | shouldFitToMarkers = shouldFitToMarkers }
+withFitToMarkers shouldFitToMarkers (Map map) =
+    Map { map | shouldFitToMarkers = shouldFitToMarkers }
 
 
 withMarkers : List (Marker msg) -> Map msg -> Map msg
-withMarkers markers map =
-    { map | markers = markers }
+withMarkers markers (Map map) =
+    Map { map | markers = markers }
 
 
 withPolygons : List (Polygon msg) -> Map msg -> Map msg
-withPolygons polygons map =
-    { map | polygons = polygons }
+withPolygons polygons (Map map) =
+    Map { map | polygons = polygons }
 
 
 
@@ -143,8 +148,8 @@ withPolygons polygons map =
 
 
 onMapReady : msg -> Map msg -> Map msg
-onMapReady evt ({ events } as map) =
-    { map | events = { events | onMapReady = Just evt } }
+onMapReady evt (Map ({ events } as map)) =
+    Map { map | events = { events | onMapReady = Just evt } }
 
 
 
@@ -152,8 +157,8 @@ onMapReady evt ({ events } as map) =
 
 
 onMapClick : msg -> Map msg -> Map msg
-onMapClick evt ({ events } as map) =
-    { map | events = { events | onMapClick = Just evt } }
+onMapClick evt (Map ({ events } as map)) =
+    Map { map | events = { events | onMapClick = Just evt } }
 
 
 
@@ -161,23 +166,23 @@ onMapClick evt ({ events } as map) =
 
 
 withDefaultUIControls : Bool -> Map msg -> Map msg
-withDefaultUIControls isEnabled ({ controls } as map) =
-    { map | controls = { controls | defaultUI = isEnabled } }
+withDefaultUIControls isEnabled (Map ({ controls } as map)) =
+    Map { map | controls = { controls | defaultUI = isEnabled } }
 
 
 withZoomActions : Bool -> Map msg -> Map msg
-withZoomActions isEnabled ({ controls } as map) =
-    { map | controls = { controls | zoom = isEnabled } }
+withZoomActions isEnabled (Map ({ controls } as map)) =
+    Map { map | controls = { controls | zoom = isEnabled } }
 
 
 withMapTypeControls : Bool -> Map msg -> Map msg
-withMapTypeControls isEnabled ({ controls } as map) =
-    { map | controls = { controls | mapType = isEnabled } }
+withMapTypeControls isEnabled (Map ({ controls } as map)) =
+    Map { map | controls = { controls | mapType = isEnabled } }
 
 
 withStreetViewControls : Bool -> Map msg -> Map msg
-withStreetViewControls isEnabled ({ controls } as map) =
-    { map | controls = { controls | streetView = isEnabled } }
+withStreetViewControls isEnabled (Map ({ controls } as map)) =
+    Map { map | controls = { controls | streetView = isEnabled } }
 
 
 mapTypeToAttribute : MapType -> Attribute msg
@@ -198,7 +203,7 @@ mapTypeToAttribute mapType =
 
 
 toHtml : Map msg -> Html msg
-toHtml map =
+toHtml (Map map) =
     let
         attributes =
             map
@@ -218,15 +223,15 @@ toHtml map =
     node "google-map" attributes (List.append markers polygons)
 
 
-baseAttributes : Map msg -> List (Attribute msg)
-baseAttributes map =
-    [ attribute "api-key" map.apiKey
+baseAttributes : Options msg -> List (Attribute msg)
+baseAttributes options =
+    [ attribute "api-key" options.apiKey
     , attribute "click-events" "true"
-    , intToAttribute "zoom" map.zoom
-    , intToAttribute "min-zoom" map.minZoom
-    , intToAttribute "max-zoom" map.maxZoom
+    , intToAttribute "zoom" options.zoom
+    , intToAttribute "min-zoom" options.minZoom
+    , intToAttribute "max-zoom" options.maxZoom
     , style "height" "100%"
-    , mapTypeToAttribute map.mapType
+    , mapTypeToAttribute options.mapType
     ]
 
 

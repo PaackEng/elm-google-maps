@@ -14,7 +14,11 @@ import Internals.Helpers exposing (addIf, maybeAdd)
 import Json.Decode as Decode
 
 
-type alias Marker msg =
+type Marker msg
+    = Marker (Options msg)
+
+
+type alias Options msg =
     { onClick : Maybe msg
     , latitude : Float
     , longitude : Float
@@ -25,31 +29,32 @@ type alias Marker msg =
 
 init : Float -> Float -> Marker msg
 init latitude longitude =
-    { onClick = Nothing
-    , latitude = latitude
-    , longitude = longitude
-    , icon = Nothing
-    , isDraggable = False
-    }
+    Marker
+        { onClick = Nothing
+        , latitude = latitude
+        , longitude = longitude
+        , icon = Nothing
+        , isDraggable = False
+        }
 
 
 withIcon : String -> Marker msg -> Marker msg
-withIcon icon marker =
-    { marker | icon = Just icon }
+withIcon icon (Marker marker) =
+    Marker { marker | icon = Just icon }
 
 
 withDraggableMode : Marker msg -> Marker msg
-withDraggableMode marker =
-    { marker | isDraggable = True }
+withDraggableMode (Marker marker) =
+    Marker { marker | isDraggable = True }
 
 
 onClick : msg -> Marker msg -> Marker msg
-onClick msg marker =
-    { marker | onClick = Just msg }
+onClick msg (Marker marker) =
+    Marker { marker | onClick = Just msg }
 
 
 toHtml : Marker msg -> Html msg
-toHtml marker =
+toHtml (Marker marker) =
     let
         attrs =
             [ attribute "latitude" (String.fromFloat marker.latitude)

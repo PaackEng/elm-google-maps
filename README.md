@@ -1,6 +1,5 @@
 > Disclaimer: This is a experimental package, but you are more than welcome to open issues and pull requests in order to request new features.
 
-
 ### Example
 
 ```elm
@@ -13,7 +12,6 @@ googleMapView googleMapKey =
 > Please, take a look at examples/src/Main.elm
 
 ### How to install
-
 
 ```
 npm install --save-dev @webcomponents/webcomponentsjs
