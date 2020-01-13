@@ -132,10 +132,3 @@ withClosedMode polygon =
 onClick : msg -> Polygon msg -> Polygon msg
 onClick msg polygon =
     IPolygon.onClick msg polygon
-
-
-{-| You should not use this function, GoogleMaps.Map uses it in order to render the polygon.
--}
-toHtml : Polygon msg -> Html msg
-toHtml polygon =
-    IPolygon.toHtml polygon
