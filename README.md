@@ -15,7 +15,7 @@ googleMapView googleMapKey =
 
 ```
 npm install --save-dev @webcomponents/webcomponentsjs
-npm install --save-dev https://github.com/PaackEng/google-map\#3.0
+npm install --save-dev https://github.com/PaackEng/google-map\#v3.0.0
 elm install PaackEng/elm-google-maps
 ```
 

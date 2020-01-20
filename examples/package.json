@@ -11,8 +11,9 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@google-web-components/google-map": "git+https://github.com/PaackEng/google-map.git#3.0",
-    "@webcomponents/webcomponentsjs": "^2.4.0"
+  "dependencies": {},
+  "devDependencies": {
+    "@google-web-components/google-map": "git+https://github.com/PaackEng/google-map.git#v3.0.0",
+    "@webcomponents/webcomponentsjs": "^2.4.1"
   }
 }
