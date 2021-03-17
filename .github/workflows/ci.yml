@@ -27,6 +27,15 @@ jobs:
      - name: Checkout
        uses: actions/checkout@v2
 
-     - name: Validate code
-       uses: PaackEng/elm-validate-action@main
+     - name: Install dependencies
+       run: yarn install
+       shell: bash
+
+     - name: Run linter
+       run: npx elm-format --validate src
+       shell: bash
+
+     - name: Run elm-review
+       run: npx elm-review --template PaackEng/elm-review-config src
+       shell: bash
 
