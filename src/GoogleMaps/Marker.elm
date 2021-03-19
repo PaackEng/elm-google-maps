@@ -34,7 +34,6 @@ module GoogleMaps.Marker exposing
 
 -}
 
-import Html exposing (Html)
 import Internals.Marker as IMarker
 
 

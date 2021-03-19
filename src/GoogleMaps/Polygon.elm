@@ -52,7 +52,6 @@ module GoogleMaps.Polygon exposing
 
 -}
 
-import Html exposing (Html)
 import Internals.Polygon as IPolygon
 
 

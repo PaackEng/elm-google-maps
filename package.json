@@ -1,0 +1,26 @@
+{
+  "name": "elm-google-maps",
+  "version": "2.0.1",
+  "description": "Type-safe google maps implementation",
+  "dependencies": {},
+  "devDependencies": {
+    "elm": "^0.19.1-5",
+    "elm-format": "^0.8.5",
+    "elm-review": "^2.4.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaackEng/elm-google-maps.git"
+  },
+  "keywords": [
+    "elm",
+    "remotedata",
+    "graphql"
+  ],
+  "author": "PaackEng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PaackEng/elm-google-maps/issues"
+  },
+  "homepage": "https://github.com/PaackEng/elm-google-maps#readme"
+}
