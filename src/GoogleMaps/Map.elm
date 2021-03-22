@@ -1,6 +1,7 @@
 module GoogleMaps.Map exposing
     ( Map, MapType, ApiKey, Latitude, Longitude
     , init, toHtml
+    , withDrawingTool
     , withDefaultUIControls, withMapTypeControls, withStreetViewControls, withZoomActions
     , withMapType, hybrid, roadmap, satellite, terrain
     , withCenter, withCustomStyle, withFitToMarkers, withMarkers, withMaxZoom, withMinZoom, withPolygons, withZoom
@@ -47,6 +48,11 @@ module GoogleMaps.Map exposing
 @docs init, toHtml
 
 
+# Plugins
+
+@docs withDrawingTool
+
+
 # UI Controls
 
 You can use those functions in order to enable/disable UI controls such as StreetView button, zoom and etc
@@ -73,6 +79,7 @@ By default all the controls are enabled
 -}
 
 import GoogleMaps.Marker exposing (Marker)
+import GoogleMaps.Plugins.DrawingTool as DrawingTool
 import GoogleMaps.Polygon exposing (Polygon)
 import Html exposing (Html)
 import Internals.Map as IMap
@@ -268,6 +275,15 @@ onMapReady evt (Map map) =
 onMapClick : msg -> Map msg -> Map msg
 onMapClick evt (Map map) =
     Map (IMap.onMapClick evt map)
+
+
+
+-- Plugins
+
+
+withDrawingTool : DrawingTool.State -> DrawingTool.Config msg -> Map msg -> Map msg
+withDrawingTool state config (Map map) =
+    Map (IMap.withDrawingTool state config map)
 
 
 
