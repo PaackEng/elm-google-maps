@@ -11,6 +11,7 @@ module Internals.Plugins.DrawingTool exposing
 import Html exposing (Html)
 import Html.Attributes exposing (attribute)
 import Html.Events exposing (on)
+import Internals.Helpers exposing (addIf)
 import Json.Decode as Decode
 
 
@@ -49,12 +50,18 @@ stopDrawing (State state) =
 
 toHtml : State -> Config msg -> Html msg
 toHtml (State { isEnabled }) { onPolygonCompleted } =
-    Html.node "google-map-drawing-tool"
-        [ attribute "disabled" <| boolToStringLower <| not isEnabled
-        , on "on-polygon-completed"
-            (Decode.map onPolygonCompleted coordinatesDecoder)
-        ]
-        []
+    let
+        attrs =
+            [ on "on-polygon-completed"
+                (Decode.map onPolygonCompleted coordinatesDecoder)
+            ]
+                |> addIf (not isEnabled) (attribute "disabled" "true")
+    in
+    Html.node "google-map-drawing-tool" attrs []
+
+
+
+-- Internals
 
 
 coordinatesDecoder : Decode.Decoder (List ( Float, Float ))
@@ -67,12 +74,3 @@ coordinatesDecoder =
                 (Decode.field "lng" Decode.float)
             )
         )
-
-
-boolToStringLower : Bool -> String
-boolToStringLower bool =
-    if bool then
-        "true"
-
-    else
-        "false"
