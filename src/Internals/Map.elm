@@ -23,7 +23,6 @@ module Internals.Map exposing
 
 import Html exposing (Attribute, Html, node)
 import Html.Attributes exposing (attribute, style)
-import Html.Events
 import Internals.Helpers exposing (addIf, maybeAdd)
 import Internals.Map.Events as Events exposing (Events)
 import Internals.Marker as Marker exposing (Marker)
