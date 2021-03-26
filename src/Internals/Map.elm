@@ -23,7 +23,7 @@ module Internals.Map exposing
 
 import Html exposing (Attribute, Html, node)
 import Html.Attributes exposing (attribute, style)
-import Html.Events exposing (on)
+import Html.Events
 import Internals.Helpers exposing (addIf, maybeAdd)
 import Internals.Map.Events as Events exposing (Events)
 import Internals.Marker as Marker exposing (Marker)
@@ -61,7 +61,7 @@ type alias Controls =
 
 
 type alias Plugins msg =
-    { drawingTool : Maybe ( DrawingTool.State, DrawingTool.Config msg )
+    { drawingTool : Maybe ( DrawingTool.State, DrawingTool.Events msg )
     }
 
 
@@ -163,7 +163,7 @@ withPolygons polygons (Map map) =
 -- Plugins
 
 
-withDrawingTool : DrawingTool.State -> DrawingTool.Config msg -> Map msg -> Map msg
+withDrawingTool : DrawingTool.State -> DrawingTool.Events msg -> Map msg -> Map msg
 withDrawingTool state config (Map ({ plugins } as map)) =
     Map { map | plugins = { plugins | drawingTool = Just ( state, config ) } }
 
@@ -247,8 +247,8 @@ toHtml (Map map) =
 
         plugins =
             case map.plugins.drawingTool of
-                Just ( drawingToolState, drawingToolConfig ) ->
-                    [ DrawingTool.toHtml drawingToolState drawingToolConfig ]
+                Just ( drawingToolState, drawingToolEvents ) ->
+                    [ DrawingTool.toHtml drawingToolState drawingToolEvents ]
 
                 Nothing ->
                     []

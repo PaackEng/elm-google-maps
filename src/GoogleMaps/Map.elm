@@ -281,7 +281,7 @@ onMapClick evt (Map map) =
 -- Plugins
 
 
-withDrawingTool : DrawingTool.State -> DrawingTool.Config msg -> Map msg -> Map msg
+withDrawingTool : DrawingTool.State -> DrawingTool.Events msg -> Map msg -> Map msg
 withDrawingTool state config (Map map) =
     Map (IMap.withDrawingTool state config map)
 

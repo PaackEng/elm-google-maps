@@ -1,6 +1,7 @@
 module GoogleMaps.Plugins.DrawingTool exposing
-    ( Config
+    ( Events
     , State
+    , events
     , initState
     , isDrawingEnabled
     , startDrawing
@@ -14,8 +15,8 @@ type alias State =
     IDrawingTool.State
 
 
-type alias Config msg =
-    IDrawingTool.Config msg
+type alias Events msg =
+    IDrawingTool.Events msg
 
 
 initState : State
@@ -36,3 +37,8 @@ startDrawing state =
 stopDrawing : State -> State
 stopDrawing state =
     IDrawingTool.stopDrawing state
+
+
+events : (List ( Float, Float ) -> msg) -> Events msg
+events onPolygonCompleted =
+    IDrawingTool.events onPolygonCompleted

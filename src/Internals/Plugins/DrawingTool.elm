@@ -1,6 +1,7 @@
 module Internals.Plugins.DrawingTool exposing
-    ( Config
+    ( Events
     , State
+    , events
     , init
     , isDrawingEnabled
     , startDrawing
@@ -16,16 +17,11 @@ import Json.Decode as Decode
 
 
 type State
-    = State StateData
+    = State { isEnabled : Bool }
 
 
-type alias StateData =
-    { isEnabled : Bool }
-
-
-type alias Config msg =
-    { onPolygonCompleted : List ( Float, Float ) -> msg
-    }
+type Events msg
+    = Events { onPolygonCompleted : List ( Float, Float ) -> msg }
 
 
 init : State
@@ -48,8 +44,13 @@ stopDrawing (State state) =
     State { state | isEnabled = False }
 
 
-toHtml : State -> Config msg -> Html msg
-toHtml (State { isEnabled }) { onPolygonCompleted } =
+events : (List ( Float, Float ) -> msg) -> Events msg
+events onPolygonCompleted =
+    Events { onPolygonCompleted = onPolygonCompleted }
+
+
+toHtml : State -> Events msg -> Html msg
+toHtml (State { isEnabled }) (Events { onPolygonCompleted }) =
     let
         attrs =
             [ on "on-polygon-completed"

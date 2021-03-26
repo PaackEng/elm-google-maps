@@ -113,7 +113,7 @@ googleMapView { mapType, googleMapKey, drawingTool, polygons } =
         |> Map.withPolygons (buildPolygons polygons)
         |> Map.withDrawingTool
             drawingTool
-            { onPolygonCompleted = OnPolygonCompleted }
+            (DrawingTool.events OnPolygonCompleted)
         |> Map.toHtml
 
 
