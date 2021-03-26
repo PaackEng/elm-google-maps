@@ -1,11 +1,11 @@
 module GoogleMaps.Map exposing
     ( Map, MapType, ApiKey, Latitude, Longitude
     , init, toHtml
-    , withDrawingTool
     , withDefaultUIControls, withMapTypeControls, withStreetViewControls, withZoomActions
     , withMapType, hybrid, roadmap, satellite, terrain
     , withCenter, withCustomStyle, withFitToMarkers, withMarkers, withMaxZoom, withMinZoom, withPolygons, withZoom
     , onMapClick, onMapReady
+    , withDrawingTool
     )
 
 {-| This module allows you to create maps using Google maps webcomponent behind the scene
@@ -48,11 +48,6 @@ module GoogleMaps.Map exposing
 @docs init, toHtml
 
 
-# Plugins
-
-@docs withDrawingTool
-
-
 # UI Controls
 
 You can use those functions in order to enable/disable UI controls such as StreetView button, zoom and etc
@@ -75,6 +70,11 @@ By default all the controls are enabled
 # Events
 
 @docs onMapClick, onMapReady
+
+
+# Plugins
+
+@docs withDrawingTool
 
 -}
 
@@ -281,6 +281,7 @@ onMapClick evt (Map map) =
 -- Plugins
 
 
+{-| -}
 withDrawingTool : DrawingTool.State -> DrawingTool.Events msg -> Map msg -> Map msg
 withDrawingTool state config (Map map) =
     Map (IMap.withDrawingTool state config map)
