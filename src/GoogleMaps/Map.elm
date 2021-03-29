@@ -85,27 +85,32 @@ import Html exposing (Html)
 import Internals.Map as IMap
 
 
-{-| -}
+{-| Upholds the possible types of surface for viewing the map.
+-}
 type MapType
     = MapType IMap.MapType
 
 
-{-| -}
+{-| API key provided by Google for accessing their maps' services.
+-}
 type alias ApiKey =
     String
 
 
-{-| -}
+{-| This type is latitude in float format as expected by Google Maps.
+-}
 type alias Latitude =
     Float
 
 
-{-| -}
+{-| This type is longitude in float format as expected by Google Maps.
+-}
 type alias Longitude =
     Float
 
 
-{-| -}
+{-| Opaque type that upholds the map description.
+-}
 type Map msg
     = Map (IMap.Map msg)
 
@@ -169,25 +174,30 @@ withMapType (MapType mapType) (Map map) =
     Map (IMap.withMapType mapType map)
 
 
-{-| -}
+{-| Map with actual photos of the terrain surface.
+-}
 satellite : MapType
 satellite =
     MapType IMap.Satellite
 
 
-{-| -}
+{-| Map focusing on a presentation of the available driveable paths.
+-}
 roadmap : MapType
 roadmap =
     MapType IMap.Roadmap
 
 
-{-| -}
+{-| Map with the actual photos of the terrain surface like [satellite](#satellite).
+While including the roads, and names from [roadmap](#roadmap)
+-}
 hybrid : MapType
 hybrid =
     MapType IMap.Hybrid
 
 
-{-| -}
+{-| Map with terrain specifications, mountains, rivers, and other geospatial information.
+-}
 terrain : MapType
 terrain =
     MapType IMap.Terrain
@@ -265,13 +275,15 @@ withPolygons polygons (Map map) =
 -- Events
 
 
-{-| -}
+{-| Triggers once the map is loaded.
+-}
 onMapReady : msg -> Map msg -> Map msg
 onMapReady evt (Map map) =
     Map (IMap.onMapReady evt map)
 
 
-{-| -}
+{-| Triggers with every click on the map.
+-}
 onMapClick : msg -> Map msg -> Map msg
 onMapClick evt (Map map) =
     Map (IMap.onMapClick evt map)
@@ -281,7 +293,8 @@ onMapClick evt (Map map) =
 -- Plugins
 
 
-{-| -}
+{-| Provides a controllable feature of allowing the user to draw polygons on the map.
+-}
 withDrawingTool : DrawingTool.State -> DrawingTool.Events msg -> Map msg -> Map msg
 withDrawingTool state config (Map map) =
     Map (IMap.withDrawingTool state config map)
@@ -291,25 +304,29 @@ withDrawingTool state config (Map map) =
 -- Controls
 
 
-{-| -}
+{-| Embeds buttons for controlling the map viewing.
+-}
 withDefaultUIControls : Bool -> Map msg -> Map msg
 withDefaultUIControls isEnabled (Map map) =
     Map (IMap.withDefaultUIControls isEnabled map)
 
 
-{-| -}
+{-| Provides a scrolling bar for controlling the current zooming in the map.
+-}
 withZoomActions : Bool -> Map msg -> Map msg
 withZoomActions isEnabled (Map map) =
     Map (IMap.withZoomActions isEnabled map)
 
 
-{-| -}
+{-| Embeds buttons for the user to change the map type in runtime.
+-}
 withMapTypeControls : Bool -> Map msg -> Map msg
 withMapTypeControls isEnabled (Map map) =
     Map (IMap.withMapTypeControls isEnabled map)
 
 
-{-| -}
+{-| Provides a button for entering the Street View mode.
+-}
 withStreetViewControls : Bool -> Map msg -> Map msg
 withStreetViewControls isEnabled (Map map) =
     Map (IMap.withStreetViewControls isEnabled map)

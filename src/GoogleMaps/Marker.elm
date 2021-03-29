@@ -37,17 +37,20 @@ module GoogleMaps.Marker exposing
 import Internals.Marker as IMarker
 
 
-{-| -}
+{-| This type is latitude in float format as expected by Google Maps.
+-}
 type alias Latitude =
     Float
 
 
-{-| -}
+{-| This type is longitude in float format as expected by Google Maps.
+-}
 type alias Longitude =
     Float
 
 
-{-| -}
+{-| Opaque type that upholds the marker description.
+-}
 type alias Marker msg =
     IMarker.Marker msg
 
