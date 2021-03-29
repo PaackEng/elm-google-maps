@@ -8,6 +8,7 @@ module Internals.Map exposing
     , withCenter
     , withCustomStyle
     , withDefaultUIControls
+    , withDrawingTool
     , withFitToMarkers
     , withMapType
     , withMapTypeControls
@@ -25,6 +26,7 @@ import Html.Attributes exposing (attribute, style)
 import Internals.Helpers exposing (addIf, maybeAdd)
 import Internals.Map.Events as Events exposing (Events)
 import Internals.Marker as Marker exposing (Marker)
+import Internals.Plugins.DrawingTool as DrawingTool
 import Internals.Polygon as Polygon exposing (Polygon)
 
 
@@ -45,6 +47,7 @@ type alias Options msg =
     , shouldFitToMarkers : Bool
     , controls : Controls
     , events : Events msg
+    , plugins : Plugins msg
     }
 
 
@@ -53,6 +56,11 @@ type alias Controls =
     , zoom : Bool
     , mapType : Bool
     , streetView : Bool
+    }
+
+
+type alias Plugins msg =
+    { drawingTool : Maybe ( DrawingTool.State, DrawingTool.Events msg )
     }
 
 
@@ -81,6 +89,7 @@ init apiKey =
         , mapStyle = Nothing
         , shouldFitToMarkers = False
         , controls = initControls
+        , plugins = initPlugins
         , events = Events.init
         }
 
@@ -91,6 +100,12 @@ initControls =
     , zoom = True
     , mapType = True
     , streetView = True
+    }
+
+
+initPlugins : Plugins msg
+initPlugins =
+    { drawingTool = Nothing
     }
 
 
@@ -141,6 +156,15 @@ withMarkers markers (Map map) =
 withPolygons : List (Polygon msg) -> Map msg -> Map msg
 withPolygons polygons (Map map) =
     Map { map | polygons = polygons }
+
+
+
+-- Plugins
+
+
+withDrawingTool : DrawingTool.State -> DrawingTool.Events msg -> Map msg -> Map msg
+withDrawingTool state config (Map ({ plugins } as map)) =
+    Map { map | plugins = { plugins | drawingTool = Just ( state, config ) } }
 
 
 
@@ -219,8 +243,19 @@ toHtml (Map map) =
 
         polygons =
             List.map Polygon.toHtml map.polygons
+
+        plugins =
+            case map.plugins.drawingTool of
+                Just ( drawingToolState, drawingToolEvents ) ->
+                    [ DrawingTool.toHtml drawingToolState drawingToolEvents ]
+
+                Nothing ->
+                    []
+
+        children =
+            List.concat [ markers, polygons, plugins ]
     in
-    node "google-map" attributes (List.append markers polygons)
+    node "google-map" attributes children
 
 
 baseAttributes : Options msg -> List (Attribute msg)

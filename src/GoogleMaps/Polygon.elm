@@ -55,22 +55,26 @@ module GoogleMaps.Polygon exposing
 import Internals.Polygon as IPolygon
 
 
-{-| -}
+{-| Opaque type that upholds the polygon description.
+-}
 type alias Polygon msg =
     IPolygon.Polygon msg
 
 
-{-| -}
+{-| This type is latitude in float format as expected by Google Maps.
+-}
 type alias Latitude =
     Float
 
 
-{-| -}
+{-| This type is longitude in float format as expected by Google Maps.
+-}
 type alias Longitude =
     Float
 
 
-{-| -}
+{-| Creates a polygon from a list of coordinates.
+-}
 init : List ( Latitude, Latitude ) -> Polygon msg
 init points =
     IPolygon.init points
@@ -114,7 +118,8 @@ withStrokeColor strokeColor polygon =
     IPolygon.withStrokeColor strokeColor polygon
 
 
-{-| -}
+{-| Positions the polygon in an integer-numbered third-dimension.
+-}
 withZIndex : Int -> Polygon msg -> Polygon msg
 withZIndex zIndex polygon =
     IPolygon.withZIndex zIndex polygon
@@ -127,7 +132,8 @@ withClosedMode polygon =
     IPolygon.withClosedMode polygon
 
 
-{-| -}
+{-| Specify a message which is triggered when the user clicks over the polygon.
+-}
 onClick : msg -> Polygon msg -> Polygon msg
 onClick msg polygon =
     IPolygon.onClick msg polygon
