@@ -374,10 +374,10 @@ elm-format@^0.8.5:
   dependencies:
     binwrap "^0.2.3"
 
-elm-review@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/elm-review/-/elm-review-2.5.0.tgz#bd2ec1b6f9b8787b17d9ca4a7e1e6aea9b857f1d"
-  integrity sha512-LPi38MoUJ0/j8s5iP49nqGKroRrnM+FCmnGPwXRUzEAgYz/H9mmoVlyjuyM9fA85D+zok0yO3Kf1d7//0EXS1A==
+elm-review@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/elm-review/-/elm-review-2.5.1.tgz#267ad8d55cb25306b30b8a2d2c3dee97f48f1a34"
+  integrity sha512-LUIUy7yX0MBtQIhhsAqX4PmB7xpMGysN4oPWa/dnNvnqAkkIJcMQJBd6vudt2rNqPCE0KLupPbvUiSQCulxmDQ==
   dependencies:
     chalk "^4.0.0"
     chokidar "^3.4.0"
