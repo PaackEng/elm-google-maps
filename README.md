@@ -15,14 +15,14 @@ googleMapView googleMapKey =
 
 ```
 npm install --save-dev @webcomponents/webcomponentsjs
-npm install --save-dev https://github.com/PaackEng/google-map\#v3.0.0
+npm install --save-dev https://github.com/PaackEng/google-map\#v3.0.2
 elm install PaackEng/elm-google-maps
 ```
 
 You have to import both items (the order matters)
 
 - @webcomponents/webcomponentsjs/custom-elements-es5-adapter
-- @google-web-components/google-map
+- @PaackEng/google-map
 
 ### Example using create-elm-app:
 
@@ -30,7 +30,7 @@ Add those lines in `index.js`
 
 ```js
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
-import '@google-web-components/google-map';
+import '@PaackEng/google-map';
 ```
 
 ### How to run the example

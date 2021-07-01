@@ -3,6 +3,8 @@ module GoogleMaps.Map exposing
     , init, toHtml
     , withDefaultUIControls, withMapTypeControls, withStreetViewControls, withZoomActions
     , withMapType, hybrid, roadmap, satellite, terrain
+    , JourneySharing, LocationProvider
+    , withJourneySharing, journeySharing, locationProvider
     , withCenter, withCustomStyle, withFitToMarkers, withMarkers, withMaxZoom, withMinZoom, withPolygons, withZoom
     , onMapClick, onMapReady
     , withDrawingTool
@@ -62,6 +64,12 @@ By default all the controls are enabled
 @docs withMapType, hybrid, roadmap, satellite, terrain
 
 
+# Journey Sharing
+
+@docs JourneySharing, LocationProvider
+@docs withJourneySharing, journeySharing, locationProvider
+
+
 # Other Modifiers
 
 @docs withCenter, withCustomStyle, withFitToMarkers, withMarkers, withMaxZoom, withMinZoom, withPolygons, withZoom
@@ -89,6 +97,18 @@ import Internals.Map as IMap
 -}
 type MapType
     = MapType IMap.MapType
+
+
+{-| Secret sauce Google gave us.
+-}
+type LocationProvider
+    = LocationProvider IMap.LocationProvider
+
+
+{-| Secret sauce Google gave us.
+-}
+type JourneySharing
+    = JourneySharing IMap.JourneySharing
 
 
 {-| API key provided by Google for accessing their maps' services.
@@ -201,6 +221,21 @@ hybrid =
 terrain : MapType
 terrain =
     MapType IMap.Terrain
+
+
+withJourneySharing : JourneySharing -> Map msg -> Map msg
+withJourneySharing (JourneySharing value) (Map map) =
+    Map (IMap.withJourneySharing value map)
+
+
+journeySharing : String -> LocationProvider -> JourneySharing
+journeySharing accessToken (LocationProvider provider) =
+    JourneySharing (IMap.JourneySharing accessToken provider)
+
+
+locationProvider : String -> String -> LocationProvider
+locationProvider projectId deliveryVehicleId =
+    LocationProvider { projectId = projectId, deliveryVehicleId = deliveryVehicleId }
 
 
 {-| The idea is make it typed, but right know you should pass the JSON as string

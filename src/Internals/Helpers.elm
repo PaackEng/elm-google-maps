@@ -1,13 +1,23 @@
-module Internals.Helpers exposing (addIf, maybeAdd)
-
-import Html exposing (Attribute)
+module Internals.Helpers exposing (addIf, maybeAdd, maybeFold)
 
 
-maybeAdd : (a -> List (Attribute msg)) -> Maybe a -> List (Attribute msg) -> List (Attribute msg)
-maybeAdd toAttrsFn maybeItem attrs =
-    maybeItem
-        |> Maybe.map (toAttrsFn >> List.append attrs)
-        |> Maybe.withDefault attrs
+maybeFold :
+    (a -> b -> b)
+    -> Maybe a
+    -> b
+    -> b
+maybeFold fold maybeItem accu =
+    case maybeItem of
+        Just item ->
+            fold item accu
+
+        Nothing ->
+            accu
+
+
+maybeAdd : (a -> List b) -> Maybe a -> List b -> List b
+maybeAdd map =
+    maybeFold (\item accu -> map item ++ accu)
 
 
 addIf : Bool -> a -> List a -> List a
