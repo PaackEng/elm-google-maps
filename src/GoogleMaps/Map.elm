@@ -99,13 +99,13 @@ type MapType
     = MapType IMap.MapType
 
 
-{-| Secret sauce Google gave us.
+{-| Handles the fleet-engine's location provider.
 -}
 type LocationProvider
     = LocationProvider IMap.LocationProvider
 
 
-{-| Secret sauce Google gave us.
+{-| Handles the fleet-engine's journey-sharing feature.
 -}
 type JourneySharing
     = JourneySharing IMap.JourneySharing
@@ -223,16 +223,22 @@ terrain =
     MapType IMap.Terrain
 
 
+{-| Sets the journey-sharing feature.
+-}
 withJourneySharing : JourneySharing -> Map msg -> Map msg
 withJourneySharing (JourneySharing value) (Map map) =
     Map (IMap.withJourneySharing value map)
 
 
+{-| Specifies the journey-sharing feature.
+-}
 journeySharing : String -> LocationProvider -> JourneySharing
 journeySharing accessToken (LocationProvider provider) =
     JourneySharing (IMap.JourneySharing accessToken provider)
 
 
+{-| Specifies a location provider for the fleet-engine.
+-}
 locationProvider : String -> String -> LocationProvider
 locationProvider projectId deliveryVehicleId =
     LocationProvider { projectId = projectId, deliveryVehicleId = deliveryVehicleId }
