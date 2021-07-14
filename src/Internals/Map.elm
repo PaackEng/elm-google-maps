@@ -1,5 +1,7 @@
 module Internals.Map exposing
-    ( Map
+    ( JourneySharing
+    , LocationProvider
+    , Map
     , MapType(..)
     , init
     , onMapClick
@@ -10,6 +12,7 @@ module Internals.Map exposing
     , withDefaultUIControls
     , withDrawingTool
     , withFitToMarkers
+    , withJourneySharing
     , withMapType
     , withMapTypeControls
     , withMarkers
@@ -23,7 +26,7 @@ module Internals.Map exposing
 
 import Html exposing (Attribute, Html, node)
 import Html.Attributes exposing (attribute, style)
-import Internals.Helpers exposing (addIf, maybeAdd)
+import Internals.Helpers exposing (addIf, maybeFold)
 import Internals.Map.Events as Events exposing (Events)
 import Internals.Marker as Marker exposing (Marker)
 import Internals.Plugins.DrawingTool as DrawingTool
@@ -39,6 +42,7 @@ type alias Options msg =
     , markers : List (Marker msg)
     , polygons : List (Polygon msg)
     , mapType : MapType
+    , journeySharing : Maybe JourneySharing
     , center : Maybe ( Float, Float )
     , minZoom : Int
     , maxZoom : Int
@@ -71,6 +75,18 @@ type MapType
     | Terrain
 
 
+type alias JourneySharing =
+    { token : String
+    , locationProvider : LocationProvider
+    }
+
+
+type alias LocationProvider =
+    { projectId : String
+    , deliveryVehicleId : String
+    }
+
+
 type alias ApiKey =
     String
 
@@ -82,6 +98,7 @@ init apiKey =
         , markers = []
         , polygons = []
         , mapType = Roadmap
+        , journeySharing = Nothing
         , center = Nothing
         , minZoom = 0
         , maxZoom = 20
@@ -126,6 +143,11 @@ withCustomStyle mapStyle (Map map) =
 withMapType : MapType -> Map msg -> Map msg
 withMapType mapType (Map map) =
     Map { map | mapType = mapType }
+
+
+withJourneySharing : JourneySharing -> Map msg -> Map msg
+withJourneySharing journeySharing (Map map) =
+    Map { map | journeySharing = Just journeySharing }
 
 
 withZoom : Int -> Map msg -> Map msg
@@ -226,6 +248,14 @@ mapTypeToAttribute mapType =
                 "terrain"
 
 
+journeySharingToAttributes : JourneySharing -> List (Attribute msg) -> List (Attribute msg)
+journeySharingToAttributes { token, locationProvider } attributes =
+    attribute "fleet-engine-access-token" token
+        :: attribute "fleet-engine-project-id" locationProvider.projectId
+        :: attribute "delivery-vehicle-id" locationProvider.deliveryVehicleId
+        :: attributes
+
+
 toHtml : Map msg -> Html msg
 toHtml (Map map) =
     let
@@ -235,8 +265,9 @@ toHtml (Map map) =
                 |> List.append (Events.toHtmlAttributes map.events)
                 |> controlsAttributes map.controls
                 |> centerAttributes map.center
-                |> maybeAdd (\mapStyle -> [ attribute "styles" mapStyle ]) map.mapStyle
+                |> maybeFold (\value accu -> attribute "styles" value :: accu) map.mapStyle
                 |> addIf map.shouldFitToMarkers (attribute "fit-to-markers" "true")
+                |> maybeFold journeySharingToAttributes map.journeySharing
 
         markers =
             List.map Marker.toHtml map.markers
@@ -280,15 +311,14 @@ controlsAttributes controls attrs =
 
 
 centerAttributes : Maybe ( Float, Float ) -> List (Attribute msg) -> List (Attribute msg)
-centerAttributes center attrs =
-    attrs
-        |> maybeAdd
-            (\( latitude, longitude ) ->
-                [ attribute "latitude" (String.fromFloat latitude)
-                , attribute "longitude" (String.fromFloat longitude)
-                ]
-            )
-            center
+centerAttributes center =
+    maybeFold
+        (\( latitude, longitude ) accu ->
+            attribute "latitude" (String.fromFloat latitude)
+                :: attribute "longitude" (String.fromFloat longitude)
+                :: accu
+        )
+        center
 
 
 intToAttribute : String -> Int -> Attribute msg
