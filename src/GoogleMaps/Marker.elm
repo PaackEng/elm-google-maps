@@ -1,8 +1,7 @@
 module GoogleMaps.Marker exposing
     ( Marker, Latitude, Longitude, init
-    , withIcon, withDraggableMode
+    , withIcon, withDraggableMode, withTitle
     , onClick
-    , withTitle
     )
 
 {-| This module allows you to create markers to be used along with GoogleMaps.Map
@@ -26,7 +25,7 @@ module GoogleMaps.Marker exposing
 
 # Modifiers
 
-@docs withIcon, withDraggableMode
+@docs withIcon, withDraggableMode, withTitle
 
 
 # Events
