@@ -1,6 +1,6 @@
 module GoogleMaps.Marker exposing
     ( Marker, Latitude, Longitude, init
-    , withIcon, withDraggableMode
+    , withIcon, withDraggableMode, withTitle
     , onClick
     )
 
@@ -25,7 +25,7 @@ module GoogleMaps.Marker exposing
 
 # Modifiers
 
-@docs withIcon, withDraggableMode
+@docs withIcon, withDraggableMode, withTitle
 
 
 # Events
@@ -74,6 +74,13 @@ onClick msg marker =
 withIcon : String -> Marker msg -> Marker msg
 withIcon icon marker =
     IMarker.withIcon icon marker
+
+
+{-| Sets an on hover title for the marker
+-}
+withTitle : String -> Marker msg -> Marker msg
+withTitle title marker =
+    IMarker.withTitle title marker
 
 
 {-| Makes the marker draggable

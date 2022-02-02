@@ -5,6 +5,7 @@ module Internals.Marker exposing
     , toHtml
     , withDraggableMode
     , withIcon
+    , withTitle
     )
 
 import Html exposing (Html, node)
@@ -24,6 +25,7 @@ type alias Options msg =
     , longitude : Float
     , icon : Maybe String
     , isDraggable : Bool
+    , title : Maybe String
     }
 
 
@@ -35,6 +37,7 @@ init latitude longitude =
         , longitude = longitude
         , icon = Nothing
         , isDraggable = False
+        , title = Nothing
         }
 
 
@@ -53,6 +56,11 @@ onClick msg (Marker marker) =
     Marker { marker | onClick = Just msg }
 
 
+withTitle : String -> Marker msg -> Marker msg
+withTitle title (Marker marker) =
+    Marker { marker | title = Just title }
+
+
 toHtml : Marker msg -> Html msg
 toHtml (Marker marker) =
     let
@@ -63,6 +71,7 @@ toHtml (Marker marker) =
             ]
                 |> addIf marker.isDraggable (attribute "draggable" "true")
                 |> maybeAdd (\icon -> [ attribute "icon" icon ]) marker.icon
+                |> maybeAdd (\title -> [ attribute "title" title ]) marker.title
                 |> maybeAdd
                     (\msg ->
                         [ on "google-map-marker-click" (Decode.succeed msg)
