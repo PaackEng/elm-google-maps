@@ -1,6 +1,6 @@
 module GoogleMaps.Marker exposing
-    ( Marker, Latitude, Longitude, init
-    , withIcon, withDraggableMode, withTitle
+    ( Marker, Latitude, Longitude, init, Animation
+    , withIcon, withDraggableMode, withTitle, withAnimation, bounce, drop
     , onClick
     )
 
@@ -20,12 +20,12 @@ module GoogleMaps.Marker exposing
             |> Map.withMarkers [ myMarker ]
             |> Map.toHtml
 
-@docs Marker, Latitude, Longitude, init
+@docs Marker, Latitude, Longitude, init, Animation
 
 
 # Modifiers
 
-@docs withIcon, withDraggableMode, withTitle
+@docs withIcon, withDraggableMode, withTitle, withAnimation, bounce, drop
 
 
 # Events
@@ -47,6 +47,15 @@ type alias Latitude =
 -}
 type alias Longitude =
     Float
+
+
+{-| This type wraps the available animations for markers in Google Maps, "DROP" or "BOUNCE" or nothing.
+
+  - See <https://developers.google.com/maps/documentation/javascript/examples/marker-animations>.
+
+-}
+type Animation
+    = Animation IMarker.Animation
 
 
 {-| Opaque type that upholds the marker description.
@@ -88,3 +97,24 @@ withTitle title marker =
 withDraggableMode : Marker msg -> Marker msg
 withDraggableMode marker =
     IMarker.withDraggableMode marker
+
+
+{-| Sets the animation for the marker.
+-}
+withAnimation : Animation -> Marker msg -> Marker msg
+withAnimation (Animation animation) marker =
+    IMarker.withAnimation animation marker
+
+
+{-| Get Bounce animation
+-}
+bounce : Animation
+bounce =
+    Animation IMarker.Bounce
+
+
+{-| Get Drop animation
+-}
+drop : Animation
+drop =
+    Animation IMarker.Drop
