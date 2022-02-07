@@ -1,8 +1,10 @@
 module Internals.Marker exposing
-    ( Marker
+    ( Animation(..)
+    , Marker
     , init
     , onClick
     , toHtml
+    , withAnimation
     , withDraggableMode
     , withIcon
     , withTitle
@@ -19,6 +21,11 @@ type Marker msg
     = Marker (Options msg)
 
 
+type Animation
+    = Drop
+    | Bounce
+
+
 type alias Options msg =
     { onClick : Maybe msg
     , latitude : Float
@@ -26,6 +33,7 @@ type alias Options msg =
     , icon : Maybe String
     , isDraggable : Bool
     , title : Maybe String
+    , animation : Maybe Animation
     }
 
 
@@ -38,46 +46,69 @@ init latitude longitude =
         , icon = Nothing
         , isDraggable = False
         , title = Nothing
+        , animation = Nothing
         }
 
 
 withIcon : String -> Marker msg -> Marker msg
-withIcon icon (Marker marker) =
-    Marker { marker | icon = Just icon }
+withIcon icon (Marker options) =
+    Marker { options | icon = Just icon }
 
 
 withDraggableMode : Marker msg -> Marker msg
-withDraggableMode (Marker marker) =
-    Marker { marker | isDraggable = True }
+withDraggableMode (Marker options) =
+    Marker { options | isDraggable = True }
 
 
 onClick : msg -> Marker msg -> Marker msg
-onClick msg (Marker marker) =
-    Marker { marker | onClick = Just msg }
+onClick msg (Marker options) =
+    Marker { options | onClick = Just msg }
 
 
 withTitle : String -> Marker msg -> Marker msg
-withTitle title (Marker marker) =
-    Marker { marker | title = Just title }
+withTitle title (Marker options) =
+    Marker { options | title = Just title }
+
+
+withAnimation : Animation -> Marker msg -> Marker msg
+withAnimation animation (Marker options) =
+    Marker { options | animation = Just animation }
+
+
+animationToAttribute : Animation -> String
+animationToAttribute a =
+    case a of
+        Drop ->
+            "DROP"
+
+        Bounce ->
+            "BOUNCE"
 
 
 toHtml : Marker msg -> Html msg
-toHtml (Marker marker) =
+toHtml (Marker options) =
     let
+        animation : String
+        animation =
+            options.animation
+                |> Maybe.map animationToAttribute
+                |> Maybe.withDefault ""
+
         attrs =
-            [ attribute "latitude" (String.fromFloat marker.latitude)
-            , attribute "longitude" (String.fromFloat marker.longitude)
+            [ attribute "latitude" (String.fromFloat options.latitude)
+            , attribute "longitude" (String.fromFloat options.longitude)
             , attribute "slot" "markers"
+            , attribute "animation" animation
             ]
-                |> addIf marker.isDraggable (attribute "draggable" "true")
-                |> maybeAdd (\icon -> [ attribute "icon" icon ]) marker.icon
-                |> maybeAdd (\title -> [ attribute "title" title ]) marker.title
+                |> addIf options.isDraggable (attribute "draggable" "true")
+                |> maybeAdd (\icon -> [ attribute "icon" icon ]) options.icon
+                |> maybeAdd (\title -> [ attribute "title" title ]) options.title
                 |> maybeAdd
                     (\msg ->
                         [ on "google-map-marker-click" (Decode.succeed msg)
                         , attribute "click-events" "true"
                         ]
                     )
-                    marker.onClick
+                    options.onClick
     in
     node "google-map-marker" attrs []
