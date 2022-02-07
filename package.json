@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/PaackEng/elm-google-maps/issues"
   },
-  "homepage": "https://github.com/PaackEng/elm-google-maps#readme"
+  "homepage": "https://github.com/PaackEng/elm-google-maps#readme",
+  "scripts": {
+    "make": "elm make --docs=docs.json"
+  }
 }
