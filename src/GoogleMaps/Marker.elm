@@ -2,7 +2,7 @@ module GoogleMaps.Marker exposing
     ( Marker, Latitude, Longitude, init, Animation
     , withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
     , bounce, drop
-    , onClick
+    , onClick, withInfoWindowOnMouseOver
     )
 
 {-| This module allows you to create markers to be used along with GoogleMaps.Map
@@ -36,7 +36,7 @@ module GoogleMaps.Marker exposing
 
 # Events
 
-@docs onClick
+@docs onClick, withInfoWindowOnMouseOver
 
 -}
 
@@ -121,6 +121,13 @@ When empty, disables the info window.
 withInfoWindow : List (Html msg) -> Marker msg -> Marker msg
 withInfoWindow infoWindow marker =
     IMarker.withInfoWindow infoWindow marker
+
+
+{-| Allows to enter/leave a Info Window specified in [`withInfoWindow`](#withInfoWindow)
+-}
+withInfoWindowOnMouseOver : Marker msg -> Marker msg
+withInfoWindowOnMouseOver marker =
+    IMarker.withInfoWindowOnMouseOver True marker
 
 
 {-| Get Bounce animation
