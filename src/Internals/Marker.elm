@@ -7,6 +7,7 @@ module Internals.Marker exposing
     , withAnimation
     , withDraggableMode
     , withIcon
+    , withInfoWindow
     , withTitle
     )
 
@@ -34,6 +35,7 @@ type alias Options msg =
     , isDraggable : Bool
     , title : Maybe String
     , animation : Maybe Animation
+    , infoWindow : List (Html msg)
     }
 
 
@@ -47,6 +49,7 @@ init latitude longitude =
         , isDraggable = False
         , title = Nothing
         , animation = Nothing
+        , infoWindow = []
         }
 
 
@@ -73,6 +76,11 @@ withTitle title (Marker options) =
 withAnimation : Animation -> Marker msg -> Marker msg
 withAnimation animation (Marker options) =
     Marker { options | animation = Just animation }
+
+
+withInfoWindow : List (Html msg) -> Marker msg -> Marker msg
+withInfoWindow infoWindow (Marker options) =
+    Marker { options | infoWindow = infoWindow }
 
 
 animationToAttribute : Animation -> String
@@ -111,4 +119,4 @@ toHtml (Marker options) =
                     )
                     options.onClick
     in
-    node "google-map-marker" attrs []
+    node "google-map-marker" attrs options.infoWindow

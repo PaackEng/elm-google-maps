@@ -1,6 +1,7 @@
 module GoogleMaps.Marker exposing
     ( Marker, Latitude, Longitude, init, Animation
-    , withIcon, withDraggableMode, withTitle, withAnimation, bounce, drop
+    , withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
+    , bounce, drop
     , onClick
     )
 
@@ -25,7 +26,12 @@ module GoogleMaps.Marker exposing
 
 # Modifiers
 
-@docs withIcon, withDraggableMode, withTitle, withAnimation, bounce, drop
+@docs withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
+
+
+# Animations
+
+@docs bounce, drop
 
 
 # Events
@@ -34,6 +40,7 @@ module GoogleMaps.Marker exposing
 
 -}
 
+import Html exposing (Html)
 import Internals.Marker as IMarker
 
 
@@ -104,6 +111,16 @@ withDraggableMode marker =
 withAnimation : Animation -> Marker msg -> Marker msg
 withAnimation (Animation animation) marker =
     IMarker.withAnimation animation marker
+
+
+{-| Sets the content of the Info Window.
+
+When empty, disables the info window.
+
+-}
+withInfoWindow : List (Html msg) -> Marker msg -> Marker msg
+withInfoWindow infoWindow marker =
+    IMarker.withInfoWindow infoWindow marker
 
 
 {-| Get Bounce animation

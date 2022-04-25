@@ -293,6 +293,7 @@ baseAttributes : Options msg -> List (Attribute msg)
 baseAttributes options =
     [ attribute "api-key" options.apiKey
     , attribute "click-events" "true"
+    , attribute "single-info-window" "true"
     , intToAttribute "zoom" options.zoom
     , intToAttribute "min-zoom" options.minZoom
     , intToAttribute "max-zoom" options.maxZoom
