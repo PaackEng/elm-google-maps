@@ -8,6 +8,7 @@ module Internals.Marker exposing
     , withDraggableMode
     , withIcon
     , withInfoWindow
+    , withInfoWindowOnMouseOver
     , withTitle
     )
 
@@ -36,6 +37,7 @@ type alias Options msg =
     , title : Maybe String
     , animation : Maybe Animation
     , infoWindow : List (Html msg)
+    , infoOnMouse : Maybe String
     }
 
 
@@ -50,6 +52,7 @@ init latitude longitude =
         , title = Nothing
         , animation = Nothing
         , infoWindow = []
+        , infoOnMouse = Nothing
         }
 
 
@@ -83,6 +86,19 @@ withInfoWindow infoWindow (Marker options) =
     Marker { options | infoWindow = infoWindow }
 
 
+withInfoWindowOnMouseOver : Bool -> Marker msg -> Marker msg
+withInfoWindowOnMouseOver value (Marker options) =
+    let
+        valueStr =
+            if value then
+                "true"
+
+            else
+                "false"
+    in
+    Marker { options | infoOnMouse = Just valueStr }
+
+
 animationToAttribute : Animation -> String
 animationToAttribute a =
     case a of
@@ -111,6 +127,7 @@ toHtml (Marker options) =
                 |> addIf options.isDraggable (attribute "draggable" "true")
                 |> maybeAdd (\icon -> [ attribute "icon" icon ]) options.icon
                 |> maybeAdd (\title -> [ attribute "title" title ]) options.title
+                |> maybeAdd (\infoOnMouse -> [ attribute "info-on-mouse" infoOnMouse ]) options.infoOnMouse
                 |> maybeAdd
                     (\msg ->
                         [ on "google-map-marker-click" (Decode.succeed msg)
