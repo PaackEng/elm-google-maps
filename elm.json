@@ -3,7 +3,7 @@
     "name": "PaackEng/elm-google-maps",
     "summary": "Type safe google maps implementation",
     "license": "BSD-3-Clause",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "exposed-modules": [
         "GoogleMaps.Map",
         "GoogleMaps.Marker",
