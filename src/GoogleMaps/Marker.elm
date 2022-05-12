@@ -88,7 +88,7 @@ onClick msg marker =
 -}
 withCursor : String -> Marker msg -> Marker msg
 withCursor cursor marker =
-    IMarker.withIcon cursor marker
+    IMarker.withCursor cursor marker
 
 {-| Sets a custom image to the marker
 -}
