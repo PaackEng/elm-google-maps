@@ -131,6 +131,7 @@ toHtml (Marker options) =
             , attribute "animation" animation
             ]
                 |> addIf options.isDraggable (attribute "draggable" "true")
+                |> maybeAdd (\cursor -> [ attribute "cursor" cursor ]) options.cursor
                 |> maybeAdd (\icon -> [ attribute "icon" icon ]) options.icon
                 |> maybeAdd (\title -> [ attribute "title" title ]) options.title
                 |> maybeAdd (\infoOnMouse -> [ attribute "info-on-mouse" infoOnMouse ]) options.infoOnMouse
