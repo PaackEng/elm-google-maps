@@ -5,6 +5,7 @@ module Internals.Marker exposing
     , onClick
     , toHtml
     , withAnimation
+    , withCursor
     , withDraggableMode
     , withIcon
     , withInfoWindow
@@ -30,6 +31,7 @@ type Animation
 
 type alias Options msg =
     { onClick : Maybe msg
+    , cursor : Maybe String
     , latitude : Float
     , longitude : Float
     , icon : Maybe String
@@ -46,6 +48,7 @@ init latitude longitude =
     Marker
         { onClick = Nothing
         , latitude = latitude
+        , cursor = Nothing
         , longitude = longitude
         , icon = Nothing
         , isDraggable = False
@@ -54,6 +57,11 @@ init latitude longitude =
         , infoWindow = []
         , infoOnMouse = Nothing
         }
+
+
+withCursor : String -> Marker msg -> Marker msg
+withCursor cursor (Marker options) =
+    Marker { options | cursor = Just cursor }
 
 
 withIcon : String -> Marker msg -> Marker msg
@@ -125,6 +133,7 @@ toHtml (Marker options) =
             , attribute "animation" animation
             ]
                 |> addIf options.isDraggable (attribute "draggable" "true")
+                |> maybeAdd (\cursor -> [ attribute "cursor" cursor ]) options.cursor
                 |> maybeAdd (\icon -> [ attribute "icon" icon ]) options.icon
                 |> maybeAdd (\title -> [ attribute "title" title ]) options.title
                 |> maybeAdd (\infoOnMouse -> [ attribute "info-on-mouse" infoOnMouse ]) options.infoOnMouse

@@ -1,6 +1,6 @@
 module GoogleMaps.Marker exposing
     ( Marker, Latitude, Longitude, init, Animation
-    , withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
+    , withCursor, withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
     , bounce, drop
     , onClick, withInfoWindowOnMouseOver
     )
@@ -26,7 +26,7 @@ module GoogleMaps.Marker exposing
 
 # Modifiers
 
-@docs withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
+@docs withCursor, withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
 
 
 # Animations
@@ -83,6 +83,13 @@ init latitude longitude =
 onClick : msg -> Marker msg -> Marker msg
 onClick msg marker =
     IMarker.onClick msg marker
+
+
+{-| Sets cursor to the marker
+-}
+withCursor : String -> Marker msg -> Marker msg
+withCursor cursor marker =
+    IMarker.withCursor cursor marker
 
 
 {-| Sets a custom image to the marker
