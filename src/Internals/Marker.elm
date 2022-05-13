@@ -58,9 +58,11 @@ init latitude longitude =
         , infoOnMouse = Nothing
         }
 
+
 withCursor : String -> Marker msg -> Marker msg
 withCursor cursor (Marker options) =
     Marker { options | cursor = Just cursor }
+
 
 withIcon : String -> Marker msg -> Marker msg
 withIcon icon (Marker options) =
