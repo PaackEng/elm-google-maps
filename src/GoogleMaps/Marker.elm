@@ -26,7 +26,7 @@ module GoogleMaps.Marker exposing
 
 # Modifiers
 
-@docs withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
+@docs withCursor, withIcon, withDraggableMode, withTitle, withAnimation, withInfoWindow
 
 
 # Animations
